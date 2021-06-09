@@ -17,16 +17,25 @@ export default function Home() {
     });
   }
 
+  // creating action: Add favorite episode, this is added in StoreProvider.js too
+  const toggleFavAction = (episode) => {
+    dispatch({
+      type: "ADD_FAV",
+      payload: episode
+    })
+  }
+
   useEffect(()=>{
     state.episodes.length === 0 && fetchDataAction();
   });
 
   return (
-    <div>
+    <React.Fragment>
       {console.log("store", state)}
-        <h1>Cartoon!></h1>
+      <div>
+        <h1>Cartoon!</h1>
         <p>pick your favourite episodes</p>
-
+      </div>
         <section>
           {state.episodes.map(episode => {
             return (
@@ -40,12 +49,15 @@ export default function Home() {
                     <div>
                       Season: {episode.season} Number: {episode.number}
                     </div>
+                    <button type='button' onClick={() => toggleFavAction(episode)}>
+                      Fav
+                    </button>
                   </section>
                 </section>
             );
           })}
         </section>
 
-    </div>
+    </React.Fragment>
   )
 }
