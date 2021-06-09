@@ -17,7 +17,7 @@ export default function Home() {
     });
   }
 
-  // creating action: Add favorite episode, this is added in StoreProvider.js too
+  // creating action: Add favorite episode, this is added in StorePactionrovider.js too
   const toggleFavAction = (episode) => {
     dispatch({
       type: "ADD_FAV",
@@ -32,14 +32,14 @@ export default function Home() {
   return (
     <React.Fragment>
       {console.log("store", state)}
-      <div>
+      <div className={styles.header}>
         <h1>Cartoon!</h1>
         <p>pick your favourite episodes</p>
       </div>
-        <section>
+        <section className={styles.episodeLayout}>
           {state.episodes.map(episode => {
             return (
-                <section key={episode.id}>
+                <section key={episode.id} className={styles.episodeBox}>
                   <img
                       src={episode.image ? episode.image.medium : ""}
                       alt={`Rick and Morty ${episode.name}`}
