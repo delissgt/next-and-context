@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
+import Link from "next/link";
 
 import styles from '../styles/Home.module.css'
 import { Store } from "../context/StoreProvider";
 
-// const EpisodesList = React.dynamic(()=> import("../components/EpisodesList/EpisodesList")); IS NOT SUPPORTED
+// const EpisodesList = React.lazyS(()=> import("../components/EpisodesList/EpisodesList")); IS NOT SUPPORTED
 import EpisodesList from "../components/EpisodesList/EpisodesList"; // WORKS OK
 
 export default function Home() {
@@ -58,8 +59,9 @@ export default function Home() {
 
       <header className={styles.header}>
         <div>
-          <h1>Cartoon!</h1>
-          <p>pick your favourite episodes</p>
+          {/*<Link to={"/"}>HOME</Link> SINTAXIS LINK FROM REACT ROUTER*/}
+          <Link href={"/home"}>Cartoon!</Link>
+          <Link href={"/favourites"} >My Favourites</Link>
         </div>
         <div>
           Favourite(s) {state.favourites.length}
