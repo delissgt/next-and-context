@@ -3,6 +3,9 @@ import React, { useEffect } from "react";
 import styles from '../styles/Home.module.css'
 import { Store } from "../context/StoreProvider";
 
+// const EpisodesList = React.dynamic(()=> import("../components/EpisodesList/EpisodesList")); IS NOT SUPPORTED
+import EpisodesList from "../components/EpisodesList/EpisodesList"; // WORKS OK
+
 export default function Home() {
   // const store = React.useContext( Store );
   const { state, dispatch } = React.useContext(Store);
@@ -41,8 +44,16 @@ export default function Home() {
     state.episodes.length === 0 && fetchDataAction();
   });
 
+
+  const props = {
+    episodes: state.episodes,
+    toggleFavAction: toggleFavAction,
+    favourites: state.favourites
+  };
+
   return (
     <React.Fragment>
+      {/*<React.Suspense fallback={<div>Loading...</div>}/> IS NOT SUPPORTED */}
       {console.log("store", state)}
 
       <header className={styles.header}>
@@ -53,29 +64,12 @@ export default function Home() {
         <div>
           Favourite(s) {state.favourites.length}
         </div>
-
       </header>
 
         <section className={styles.episodeLayout}>
-          {state.episodes.map(episode => {
-            return (
-                <section key={episode.id} className={styles.episodeBox}>
-                  <img
-                      src={episode.image ? episode.image.medium : ""}
-                      alt={`Rick and Morty ${episode.name}`}
-                  />
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }} >{episode.name}</div>
-                  <section>
-                    <div>
-                      Season: {episode.season} Number: {episode.number}
-                    </div>
-                    <button type='button' onClick={() => toggleFavAction(episode)}>
-                      {state.favourites.find(fav => fav.id === episode.id) ? "Unfav": "Fav"}
-                    </button>
-                  </section>
-                </section>
-            );
-          })}
+
+          <EpisodesList {...props} />
+
         </section>
 
     </React.Fragment>
